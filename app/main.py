@@ -1,23 +1,15 @@
 #!/usr/bin/python3
 from get_coin_data import get_coin_data
-import json
-
-
-def write_to_file(filename, data):
-    with open(filename, 'a') as file:
-        json.dump(data, file)
+from helpers import *
+import pandas as pd
 
 
 def main():
-    with open('data/api_key.json') as f:
-        data = json.load(f)
-
-    if data["api_key"]:
-        cryptocurrency = get_coin_data(data["api_key"], "BTC")
-        print(cryptocurrency)
-        write_to_file('/data/cryptocurrency.json', cryptocurrency)
-    else:
-        print('Error: Failed to read API key from the JSON file')
+    cryptocurrency = get_coin_data(api_key(), 'BTC')
+    # Read the data dict into a DataFrame
+    cryptocurrencyd_dataframe = pd.DataFrame(cryptocurrency, index=[1])
+    print(cryptocurrencyd_dataframe)
+    write_to_file('/data/cryptocurrency.csv', cryptocurrencyd_dataframe)
 
 
 if __name__ == '__main__':

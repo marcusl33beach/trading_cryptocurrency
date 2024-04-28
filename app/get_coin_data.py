@@ -1,4 +1,5 @@
 import requests
+import pandas as pd
 
 
 def get_coin_data(api_key, coin):
